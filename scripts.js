@@ -1,4 +1,4 @@
-window.onload = () =>{
+window.onload = () => {
     getDate();
     getTheatre();
 }
@@ -27,7 +27,7 @@ getDate = () => {
                 date_selection.appendChild(opt);
             }
         }
-    }  
+    }
 }
 
 getTheatre = () => {
@@ -80,10 +80,8 @@ getData = () => {
                 let YearMonthDaySplit = start[0].split("-");
                 let place = xmlhttp.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
 
-                document.getElementById("movie_data").innerHTML +=`<div class="movie"> <b>` + title + "</b> <br>" + place + "<br> <img src=" + pic +" alt=''> " + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " "+start[1].slice(0, -3); + " </div> <br>";
+                document.getElementById("movie_data").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br> <img src=" + pic + " alt=''> " + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3); + " </div> <br> <br>";
             }
         }
     }
 }
-
-
