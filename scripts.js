@@ -1,15 +1,24 @@
 window.onload = () => {
     getDate();
     getTheatre();
+    getSynopsis();
+}
+
+// Local Storages
+if (!localStorage.getItem("synopsislist")) {
+    var synopsis_list = [];
+}
+else {
+    var synopsis_list = JSON.parse(localStorage.getItem("synopsislist"));
 }
 
 getDate = () => {
     // Create AJAX object
-    let xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.overrideMimeType('application/xml');
 
     // Specify the data / url to be fetched
-    let URL2 = "https://www.finnkino.fi/xml/ScheduleDates/";
+    var URL2 = "https://www.finnkino.fi/xml/ScheduleDates/";
     xmlhttp.open("GET", URL2, true);
     xmlhttp.send();
 
@@ -17,11 +26,11 @@ getDate = () => {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             // find myDiv and insert results there
             document.getElementById("date_list").innerHTML = "";
-            let date_selection = document.getElementById("date_list");
-            for (let i = 0; i < xmlhttp.responseXML.getElementsByTagName("dateTime").length; i++) {
-                let YearMonthDay = xmlhttp.responseXML.getElementsByTagName("dateTime")[i].innerHTML.split("T");
-                let YearMonthDaySplit = YearMonthDay[0].split("-");
-                let opt = document.createElement('option');
+            var date_selection = document.getElementById("date_list");
+            for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("dateTime").length; i++) {
+                var YearMonthDay = xmlhttp.responseXML.getElementsByTagName("dateTime")[i].innerHTML.split("T");
+                var YearMonthDaySplit = YearMonthDay[0].split("-");
+                var opt = document.createElement('option');
                 opt.innerHTML = YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0];
                 opt.value = YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0];
                 date_selection.appendChild(opt);
@@ -32,11 +41,11 @@ getDate = () => {
 
 getTheatre = () => {
     // Create AJAX object
-    let xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.overrideMimeType('application/xml');
 
     // Specify the data / url to be fetched
-    let URL2 = "https://www.finnkino.fi/xml/TheatreAreas/";
+    var URL2 = "https://www.finnkino.fi/xml/TheatreAreas/";
     xmlhttp.open("GET", URL2, true);
     xmlhttp.send();
 
@@ -44,9 +53,9 @@ getTheatre = () => {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             // find myDiv and insert results there
             document.getElementById("theater_list").innerHTML = "";
-            let theatre_selection = document.getElementById("theater_list");
-            for (let i = 0; i < xmlhttp.responseXML.getElementsByTagName("TheatreArea").length; i++) {
-                let opt = document.createElement('option');
+            var theatre_selection = document.getElementById("theater_list");
+            for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("TheatreArea").length; i++) {
+                var opt = document.createElement('option');
                 opt.innerHTML = xmlhttp.responseXML.getElementsByTagName("Name")[i].innerHTML;
                 opt.value = xmlhttp.responseXML.getElementsByTagName("ID")[i].innerHTML;
                 theatre_selection.appendChild(opt);
@@ -55,50 +64,74 @@ getTheatre = () => {
     }
 }
 
+getSynopsis = () => {
+    // Create AJAX objects
+    var xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.overrideMimeType('application/xml');
+
+    // Specify the data / url to be fetched
+    var URL2 = "https://www.finnkino.fi/xml/Events/";
+    xmlhttp2.open("GET", URL2, true);
+    xmlhttp2.send();
+
+    xmlhttp2.onreadystatechange = function () {
+        if (xmlhttp2.readyState == 4 && xmlhttp2.status == 200) {
+            for (var i = 0; i < xmlhttp2.responseXML.getElementsByTagName("ID").length; i++) {
+                synopsis_list.push(xmlhttp2.responseXML.getElementsByTagName("ID")[i].innerHTML);
+                synopsis_list.push(xmlhttp2.responseXML.getElementsByTagName("ShortSynopsis")[i].innerHTML);
+            }
+            valueCallBack(synopsis_list);
+        }
+    }
+}
+
+function valueCallBack(value) {
+    localStorage.setItem("synopsislist", JSON.stringify(value));
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 getData = () => {
     document.getElementById("movie_data1").innerHTML = "";
     document.getElementById("movie_data2").innerHTML = "";
     document.getElementById("movie_data3").innerHTML = "";
-    let theatre = document.getElementById("theater_list").value;
-    let date = document.getElementById("date_list").value;
-    console.log(theatre);
+    var theatre = document.getElementById("theater_list").value;
+    var date = document.getElementById("date_list").value;
+
     // Create AJAX objects
-    let xmlhttp1 = new XMLHttpRequest();
-    xmlhttp1.overrideMimeType('application/xml');
-    let xmlhttp2 = new XMLHttpRequest();
-    xmlhttp2.overrideMimeType('application/xml');
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.overrideMimeType('application/xml');
 
     // Specify the data / url to be fetched
-    let URL2 = "https://www.finnkino.fi/xml/Schedule/?area=" + theatre + "&dt=" + date;
-    xmlhttp1.open("GET", URL2, true);
-    xmlhttp1.send();
+    var URL2 = "https://www.finnkino.fi/xml/Schedule/?area=" + theatre + "&dt=" + date;
+    xmlhttp.open("GET", URL2, true);
+    xmlhttp.send();
 
-    let URL3 = "https://www.finnkino.fi/xml/Events/";
-    xmlhttp2.open("GET", URL3, true);
-    xmlhttp2.send();
-
-    xmlhttp1.onreadystatechange, xmlhttp2.onreadystatechange = function () {
-        if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200 && xmlhttp2.readyState == 4 && xmlhttp2.status == 200) {
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             // find myDiv and insert results there
-            
-            for (let i = 0; i < xmlhttp1.responseXML.getElementsByTagName("Show").length; i++) {
-                let ID = xmlhttp1.responseXML.getElementsByTagName("EventID")[i].innerHTML;
-                let title = xmlhttp1.responseXML.getElementsByTagName("Title")[i].innerHTML;
-                let pic = xmlhttp1.responseXML.getElementsByTagName("EventSmallImagePortrait")[i].innerHTML;
-                let start = xmlhttp1.responseXML.getElementsByTagName("dttmShowStart")[i].innerHTML.split("T");
-                let YearMonthDaySplit = start[0].split("-");
-                let place = xmlhttp1.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
+
+            for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("Show").length; i++) {
+                var ID = xmlhttp.responseXML.getElementsByTagName("EventID")[i].innerHTML;
+                var title = xmlhttp.responseXML.getElementsByTagName("Title")[i].innerHTML;
+                var pic = xmlhttp.responseXML.getElementsByTagName("EventSmallImagePortrait")[i].innerHTML;
+                var start = xmlhttp.responseXML.getElementsByTagName("dttmShowStart")[i].innerHTML.split("T");
+                var YearMonthDaySplit = start[0].split("-");
+                var place = xmlhttp.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
 
                 document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + " </div>";
-                
+
                 document.getElementById("movie_data2").innerHTML += `<div class="movie"> <img src=` + pic + " alt=''> </div>";
 
-                for (let i = 0; i < xmlhttp2.responseXML.getElementsByTagName("ID").length; i++) {
-                    if(parseInt(xmlhttp2.responseXML.getElementsByTagName("ID")[i].innerHTML)===parseInt(ID)) {
-                        document.getElementById("movie_data3").innerHTML += `<div class="movie">` + xmlhttp2.responseXML.getElementsByTagName("ShortSynopsis")[i].innerHTML + "</div>";
+                var synopsis_list_unique = JSON.parse(localStorage.getItem("synopsislist")).filter(onlyUnique);
+
+                for (let i = 0; i < synopsis_list_unique.length; i++) {
+                    if (parseInt(synopsis_list_unique[i]) == parseInt(ID)) {
+                        document.getElementById("movie_data3").innerHTML += `<div class="movie">` + synopsis_list_unique[i + 1] + "</div>";
                     }
                 }
-                // ==> Create array list   
             }
         }
     }
