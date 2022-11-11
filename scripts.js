@@ -1,6 +1,6 @@
 window.onload = () => {
     getDate();
-    getTheatre();
+    getTheater();
     getSynopsis();
 }
 
@@ -39,13 +39,13 @@ getDate = () => {
     }
 }
 
-getTheatre = () => {
+getTheater = () => {
     // Create AJAX object
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.overrideMimeType('application/xml');
 
     // Specify the data / url to be fetched
-    var URL2 = "https://www.finnkino.fi/xml/TheatreAreas/";
+    var URL2 = "https://www.finnkino.fi/xml/TheaterAreas/";
     xmlhttp.open("GET", URL2, true);
     xmlhttp.send();
 
@@ -53,12 +53,12 @@ getTheatre = () => {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             // find myDiv and insert results there
             document.getElementById("theater_list").innerHTML = "";
-            var theatre_selection = document.getElementById("theater_list");
-            for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("TheatreArea").length; i++) {
+            var theater_selection = document.getElementById("theater_list");
+            for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("TheaterArea").length; i++) {
                 var opt = document.createElement('option');
                 opt.innerHTML = xmlhttp.responseXML.getElementsByTagName("Name")[i].innerHTML;
                 opt.value = xmlhttp.responseXML.getElementsByTagName("ID")[i].innerHTML;
-                theatre_selection.appendChild(opt);
+                theater_selection.appendChild(opt);
             }
         }
     }
@@ -97,7 +97,7 @@ getData = () => {
     document.getElementById("movie_data1").innerHTML = "";
     document.getElementById("movie_data2").innerHTML = "";
     document.getElementById("movie_data3").innerHTML = "";
-    var theatre = document.getElementById("theater_list").value;
+    var theater = document.getElementById("theater_list").value;
     var date = document.getElementById("date_list").value;
 
     // Create AJAX objects
@@ -105,7 +105,7 @@ getData = () => {
     xmlhttp.overrideMimeType('application/xml');
 
     // Specify the data / url to be fetched
-    var URL2 = "https://www.finnkino.fi/xml/Schedule/?area=" + theatre + "&dt=" + date;
+    var URL2 = "https://www.finnkino.fi/xml/Schedule/?area=" + theater + "&dt=" + date;
     xmlhttp.open("GET", URL2, true);
     xmlhttp.send();
 
@@ -120,7 +120,7 @@ getData = () => {
                 var start = xmlhttp.responseXML.getElementsByTagName("dttmShowStart")[i].innerHTML.split("T");
                 var end = xmlhttp.responseXML.getElementsByTagName("dttmShowEnd")[i].innerHTML.split("T");
                 var YearMonthDaySplit = start[0].split("-");
-                var place = xmlhttp.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
+                var place = xmlhttp.responseXML.getElementsByTagName("TheaterAndAuditorium")[i].innerHTML;
                 var ticket = xmlhttp.responseXML.getElementsByTagName("ShowURL")[i].innerHTML;
 
                 document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action=" ` + ticket + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
