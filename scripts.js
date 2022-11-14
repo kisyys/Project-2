@@ -125,7 +125,7 @@ getData = () => {
 
                 document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action=" ` + ticket + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
 
-                document.getElementById("movie_data2").innerHTML += `<div class="movie"> <img src=` + pic + " alt=''> </div>";
+                document.getElementById("movie_data2").innerHTML += `<div class="movie"> <img class="pic" src=` + pic + " alt=''> </div>";
 
                 var synopsis_list_unique = JSON.parse(localStorage.getItem("synopsislist")).filter(onlyUnique);
 

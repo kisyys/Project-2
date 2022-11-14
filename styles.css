@@ -2,9 +2,9 @@
 	border-bottom:1px solid rgb(0, 153, 255);
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 10px;
     height: 200px;
 }
+
 
 #list1 {
 	border-bottom:1px solid rgb(0, 153, 255);
@@ -16,4 +16,28 @@
 	border-bottom:1px solid rgb(0, 153, 255);
     padding-top: 5px;
     padding-bottom: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+	.movie { 	
+		font-size: 14px;
+        height: 200px;
+	}
+
+    .pic{
+        max-width: 150%;   
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+	.movie { 	
+		font-size: 10px;
+        height: 200px;
+	}
+
+    .pic{
+        max-width: 150%;
+           
+    }
 }
