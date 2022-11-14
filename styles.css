@@ -21,7 +21,6 @@
 @media screen and (max-width: 1000px) {
 	.movie { 	
 		font-size: 14px;
-        height: 200px;
 	}
 
     .pic{
@@ -33,7 +32,7 @@
 @media screen and (max-width: 800px) {
 	.movie { 	
 		font-size: 10px;
-        height: 200px;
+        height: 190px;
 	}
 
     .pic{
