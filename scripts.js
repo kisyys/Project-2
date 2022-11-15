@@ -121,9 +121,9 @@ getData = () => {
                 var end = xmlhttp.responseXML.getElementsByTagName("dttmShowEnd")[i].innerHTML.split("T");
                 var YearMonthDaySplit = start[0].split("-");
                 var place = xmlhttp.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
-                var ticket = xmlhttp.responseXML.getElementsByTagName("ShowURL")[i].innerHTML;
+                var ticket = xmlhttp.responseXML.getElementsByTagName("ShowURL")[i].innerHTML.split(":");
 
-                document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action=" ` + ticket + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
+                document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action="https: ` + ticket[1] + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
 
                 document.getElementById("movie_data2").innerHTML += `<div class="movie"> <img class="pic" src=` + pic + " alt=''> </div>";
 
