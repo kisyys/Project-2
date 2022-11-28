@@ -12,6 +12,28 @@ else {
     var synopsis_list = JSON.parse(localStorage.getItem("synopsislist"));
 }
 
+searchMovie = () => {
+    var input = document.getElementById("search_list");
+    var filter = input.value.toUpperCase();
+    var mov1 = document.getElementsByClassName('movie1');
+    var mov2 = document.getElementsByClassName('movie2');
+    var mov3 = document.getElementsByClassName('movie3');
+    var title_search = document.getElementsByClassName('b1');
+
+    for (i = 0; i < title_search.length; i++) {
+        var txtValue = title_search[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            mov1[i].style.display = "";
+            mov2[i].style.display = "";
+            mov3[i].style.display = "";
+        } else {
+            mov1[i].style.display = "none";
+            mov2[i].style.display = "none";
+            mov3[i].style.display = "none";
+        }
+    }
+}
+
 getDate = () => {
     // Create AJAX object
     var xmlhttp = new XMLHttpRequest();
@@ -122,18 +144,16 @@ getData = () => {
                 var YearMonthDaySplit = start[0].split("-");
                 var place = xmlhttp.responseXML.getElementsByTagName("TheatreAndAuditorium")[i].innerHTML;
                 var ticket = xmlhttp.responseXML.getElementsByTagName("ShowURL")[i].innerHTML.split(":");
-                console.log(ticket[0]);
-                console.log(ticket[1]);
 
-                document.getElementById("movie_data1").innerHTML += `<div class="movie"> <b>` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action="https:` + ticket[1] + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
+                document.getElementById("movie_data1").innerHTML += `<div class="movie1"> <b class="b1">` + title + "</b> <br>" + place + "<br>" + YearMonthDaySplit[2] + "." + YearMonthDaySplit[1] + "." + YearMonthDaySplit[0] + " " + start[1].slice(0, -3) + ` <br> Ends around: ` + end[1].slice(0, -3) + `<br> <br> <form action="https:` + ticket[1] + `"> <input type="submit" value="Buy / Reserve ticket" /> </form> </div>`;
 
-                document.getElementById("movie_data2").innerHTML += `<div class="movie"> <img class="pic" src=` + pic + " alt=''> </div>";
+                document.getElementById("movie_data2").innerHTML += `<div class="movie2"> <img class="pic" src=` + pic + " alt=''> </div>";
 
                 var synopsis_list_unique = JSON.parse(localStorage.getItem("synopsislist")).filter(onlyUnique);
 
                 for (let i = 0; i < synopsis_list_unique.length; i++) {
                     if (parseInt(synopsis_list_unique[i]) == parseInt(ID)) {
-                        document.getElementById("movie_data3").innerHTML += `<div class="movie">` + synopsis_list_unique[i + 1] + "</div>";
+                        document.getElementById("movie_data3").innerHTML += `<div class="movie3">` + synopsis_list_unique[i + 1] + "</div>";
                     }
                 }
             }
