@@ -116,6 +116,8 @@ function onlyUnique(value, index, self) {
 }
 
 getData = () => {
+    document.getElementById("list3").style.display = "block";
+    document.getElementById("search_list").value = ""; 
     document.getElementById("movie_data1").innerHTML = "";
     document.getElementById("movie_data2").innerHTML = "";
     document.getElementById("movie_data3").innerHTML = "";

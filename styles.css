@@ -40,6 +40,7 @@
 	border-bottom:1px solid rgb(0, 153, 255);
     padding-top: 5px;
     padding-bottom: 10px;
+    display: none;
 }
 
 @media screen and (max-width: 1000px) {
