@@ -20,28 +20,28 @@
 
 <body>
     <div class="container">
-        <div class="row"  style="margin:auto;">		
-            <div class="col-12" style="margin:auto;">
+        <div class="row" >		
+            <div class="col-12">
                 <h1>Movies in Finnkino</h1>
             </div>
         </div>
-        <div class="row"  style="margin:auto;">
-            <div class="col-4" id="list1" style="margin:auto;">
+        <div class="row">
+            <div class="col-4" id="list1">
                 <form>
                     <legend>Select theatre:</legend> 
                     <select id="theatre_list" onchange="getData()"></select>
                 </form>
             </div>
-            <div class="col-4" id="list2" style="margin:auto;">
+            <div class="col-3" id="list2">
                 <form>
                     <legend>Select date:</legend> 
                     <select id="date_list" onchange="getData()"></select>
                 </form>           
             </div>
-            <div class="col-4" id="list3" style="margin:auto;">
+            <div class="col-5" id="list3">
                 <form>
                     <legend>Search movie:</legend> 
-                    <input id="search_list" onkeyup="searchMovie()"></input>
+                    <input id="search_list" onkeyup="searchMovie()" size="15"></input>
                 </form>           
             </div>     
         </div>

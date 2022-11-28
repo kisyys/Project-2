@@ -39,10 +39,14 @@
 #list3 {
 	border-bottom:1px solid rgb(0, 153, 255);
     padding-top: 5px;
-    padding-bottom: 7px;
+    padding-bottom: 10px;
 }
 
 @media screen and (max-width: 1000px) {
+    h1 {
+        font-size: 30px;
+    }
+
 	legend {
         font-size: 18px;
     }
@@ -74,7 +78,11 @@
 
 
 @media screen and (max-width: 800px) {
-	legend {
+	h1 {
+        font-size: 24px;
+    }
+    
+    legend {
         font-size: 12px;
     }
     
