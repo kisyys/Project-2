@@ -1,3 +1,4 @@
+// Preload functions
 window.onload = () => {
     getDate();
     getTheatre();
@@ -12,6 +13,7 @@ else {
     var synopsis_list = JSON.parse(localStorage.getItem("synopsislist"));
 }
 
+// Create search function
 searchMovie = () => {
     var input = document.getElementById("search_list");
     var filter = input.value.toUpperCase();
@@ -34,6 +36,7 @@ searchMovie = () => {
     }
 }
 
+// Create function for dates
 getDate = () => {
     // Create AJAX object
     var xmlhttp = new XMLHttpRequest();
@@ -46,7 +49,7 @@ getDate = () => {
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            // find myDiv and insert results there
+            // Find div and insert results there
             document.getElementById("date_list").innerHTML = "";
             var date_selection = document.getElementById("date_list");
             for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("dateTime").length; i++) {
@@ -61,6 +64,7 @@ getDate = () => {
     }
 }
 
+// Create function for theatres
 getTheatre = () => {
     // Create AJAX object
     var xmlhttp = new XMLHttpRequest();
@@ -73,7 +77,7 @@ getTheatre = () => {
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            // find myDiv and insert results there
+            // Find div and insert results there
             document.getElementById("theatre_list").innerHTML = "";
             var theatre_selection = document.getElementById("theatre_list");
             for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("TheatreArea").length; i++) {
@@ -86,6 +90,7 @@ getTheatre = () => {
     }
 }
 
+// Create function for synopsis
 getSynopsis = () => {
     // Create AJAX objects
     var xmlhttp2 = new XMLHttpRequest();
@@ -107,14 +112,17 @@ getSynopsis = () => {
     }
 }
 
+// Create function for call back as AJAX is not supporting it as such
 function valueCallBack(value) {
     localStorage.setItem("synopsislist", JSON.stringify(value));
 }
 
+// Create function for unique values in array
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+// Create function for data and page creation
 getData = () => {
     document.getElementById("list3").style.display = "block";
     document.getElementById("search_list").value = ""; 
@@ -135,8 +143,7 @@ getData = () => {
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            // find myDiv and insert results there
-
+            // Find div and insert results there
             for (var i = 0; i < xmlhttp.responseXML.getElementsByTagName("Show").length; i++) {
                 var ID = xmlhttp.responseXML.getElementsByTagName("EventID")[i].innerHTML;
                 var title = xmlhttp.responseXML.getElementsByTagName("Title")[i].innerHTML;
